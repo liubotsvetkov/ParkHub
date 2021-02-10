@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+
+  mysql-db:
+    container_name: mysql-db
+    image: "mysql:latest"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+
+  demo-app:
+    container_name: demo-app
+    image: "demo-app:latest"
+    ports:
+      - "8089:8089"
+    depends_on:
+      - mysql-db
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge

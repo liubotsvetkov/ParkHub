@@ -16,6 +16,7 @@ services:
 
   demo-app:
     container_name: demo-app
+    build: .
     image: "demo-app:latest"
     ports:
       - "8089:8089"

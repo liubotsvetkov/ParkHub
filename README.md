@@ -2,7 +2,7 @@
 AUBG Hack 3.0 Project
 
 # Start:
-mvn clean package
+mvn clean package \
 docker-compose up --build -d
 
 # Running on:

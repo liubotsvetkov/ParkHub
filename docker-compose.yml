@@ -16,7 +16,7 @@ services:
 
   demo-app:
     container_name: demo-app
-    build: .
+    build: ./backend
     image: "demo-app:latest"
     ports:
       - "8089:8089"
@@ -24,6 +24,20 @@ services:
       - mysql-db
     networks:
       - app-network
+
+  frontend-app:
+    container_name: frontend-app
+    build: ./frontend
+    image: "frontend-app:latest"
+    environment:
+      - HOST=0.0.0.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - demo-app
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge

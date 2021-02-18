@@ -14,17 +14,20 @@ public class PersonController {
     PersonService personService;
 
     @PostMapping("/create")
+    @CrossOrigin(origins = "http://localhost:8080")
     public Long createPerson(@RequestBody Person person) {
         personService.savePerson(person);
         return person.getPersonId();
     }
 
     @GetMapping("/viewAll")
+    @CrossOrigin(origins = "http://localhost:8080")
     public Iterable<Person> viewAllPersons() {
         return personService.getPersonHistory();
     }
 
     @GetMapping("/view/{id}")
+    @CrossOrigin(origins = "http://localhost:8080")
     public Person viewPersonById(@PathVariable("id") int id) {
         Optional<Person> person = personService.getPerson(id);
         if(person.isPresent()) {

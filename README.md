@@ -7,7 +7,6 @@ mvn clean package \
 cd .. \
 docker-compose up --build -d
 
-
 # Running on:
 http://localhost:8080
  

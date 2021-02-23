@@ -1,0 +1,7 @@
+com\example\demo\DemoApplication.class
+com\example\demo\exceptions\InvalidPersonReferenceException.class
+com\example\demo\controllers\PersonController.class
+com\example\demo\repository\PersonRepository.class
+com\example\demo\services\PersonService.class
+com\example\demo\models\Person.class
+com\example\demo\CustomWebSecurityConfigurerAdapter.class

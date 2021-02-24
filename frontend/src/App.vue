@@ -47,9 +47,14 @@ export default {
   },
   methods: {
     viewAll: function() {
-      axios.get('http://localhost:8089/viewAll')
-        .then(response => this.message = response.data)
-        .catch(err => console.log(err))
+      console.log("authdata is: " + JSON.stringify(process.env))
+      axios({
+        method: 'get',
+        url: 'http://localhost:8089/viewAll',
+        headers: process.env.VUE_APP_AUTHDATA
+      })
+      .then(response => this.message = response.data)
+      .catch(err => console.log(err))
     },
     submitForm(){
       axios.post('http://localhost:8089/create', this.form)

@@ -24,6 +24,8 @@ public class CustomWebSecurityConfigurerAdapter extends
                 .authenticated()
                 .and()
                 .httpBasic();
+        http
+                .cors();
     }
 
     @Autowired

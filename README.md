@@ -1,6 +1,11 @@
 # AUBG_Hack
 AUBG Hack 3.0 Project
 
+# Pre-install tools needed:
+- JDK 11 or higher
+- Maven
+- Docker
+
 # Start:
 cd backend \
 mvn clean package \

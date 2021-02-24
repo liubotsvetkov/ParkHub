@@ -51,25 +51,36 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:8089/viewAll',
-        headers: process.env.VUE_APP_AUTHDATA
+        headers: {
+          'Access-Control-Allow-Origin': true,
+          'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ='
+        }
       })
       .then(response => this.message = response.data)
       .catch(err => console.log(err))
     },
     submitForm(){
-      axios.post('http://localhost:8089/create', this.form)
-        .then((res) => {
-          this.form.name = ''
-          this.form.age = ''
-          this.form.height = ''
-          console.log(res)
-        })
-        .catch((error) => {
-          this.form.name = ''
-          this.form.age = ''
-          this.form.height = ''
-          console.log(error)
-        })
+      axios({
+        method: 'post',
+        url: 'http://localhost:8089/create',
+        data: this.form,
+        headers: {
+          'Access-Control-Allow-Origin': true,
+          'Authorization': 'Basic YWRtaW46cGFzc3dvcmQ='
+        }
+      })
+      .then((res) => {
+        this.form.name = ''
+        this.form.age = ''
+        this.form.height = ''
+        console.log(res)
+      })
+      .catch((error) => {
+        this.form.name = ''
+        this.form.age = ''
+        this.form.height = ''
+        console.log(error)
+      })
     }
   }
 };

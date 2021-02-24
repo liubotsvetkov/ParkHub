@@ -7,6 +7,9 @@ mvn clean package \
 cd .. \
 docker-compose up --build -d
 
+# Hint:
+You may need to convert the wait-for-it.sh file type to Unix through a text editor.
+
 # Running on:
 http://localhost:8080
  

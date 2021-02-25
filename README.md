@@ -8,7 +8,7 @@ AUBG Hack 3.0 Project
 
 # Start:
 cd backend \
-mvn clean package \
+mvn clean package -Dmaven.test.skip=true \
 cd .. \
 docker-compose up --build -d
 

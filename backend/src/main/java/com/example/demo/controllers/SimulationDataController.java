@@ -62,16 +62,19 @@ public class SimulationDataController {
 
     @PostMapping("/simulationDataUpdate")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public int updateData(@RequestBody SimUpdateData updateData) {
-        List<ParkingSlot> parkingSlots = parkingSlotRepository.findBySlotIdentAndParkingZoneZoneIdent(updateData.getSlot_id(), updateData.getParking());
-        if (!parkingSlots.isEmpty()) {
-            parkingSlots.get(0).setState(updateData.getState());
-            parkingSlots.get(0).setDateTimeUpdated(new Date());
+    public String updateData(@RequestBody List<SimUpdateData> updateData) {
+        for (SimUpdateData data : updateData) {
+            List<ParkingSlot> parkingSlots =
+                    parkingSlotRepository.findBySlotIdentAndParkingZoneZoneIdent(data.getSlot_id(), data.getParking());
+            if (!parkingSlots.isEmpty()) {
+                parkingSlots.get(0).setState(data.getState());
+                parkingSlots.get(0).setDateTimeUpdated(new Date());
+            }
+            else {
+                throw new IllegalArgumentException();
+            }
+            parkingSlotRepository.save(parkingSlots.get(0));
         }
-        else {
-            throw new IllegalArgumentException();
-        }
-        parkingSlotRepository.save(parkingSlots.get(0));
-        return parkingSlots.get(0).getId();
+        return "success";
     }
 }

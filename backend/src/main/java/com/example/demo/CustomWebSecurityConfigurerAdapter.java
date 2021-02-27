@@ -35,6 +35,7 @@ public class CustomWebSecurityConfigurerAdapter extends
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
+                .antMatchers("/simulationDataInsert").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

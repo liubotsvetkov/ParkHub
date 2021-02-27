@@ -1,7 +1,13 @@
 com\example\demo\DemoApplication.class
 com\example\demo\exceptions\InvalidPersonReferenceException.class
+com\example\demo\models\UserAuthority.class
 com\example\demo\controllers\PersonController.class
-com\example\demo\repository\PersonRepository.class
 com\example\demo\services\PersonService.class
+com\example\demo\models\User.class
 com\example\demo\models\Person.class
+com\example\demo\repository\UserAuthorityRepository.class
 com\example\demo\CustomWebSecurityConfigurerAdapter.class
+com\example\demo\repository\UserRepository.class
+com\example\demo\repository\PersonRepository.class
+com\example\demo\controllers\RegisterController.class
+com\example\demo\Beans\UserDto.class

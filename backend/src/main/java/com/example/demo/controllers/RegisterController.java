@@ -27,7 +27,7 @@ public class RegisterController {
 
     @PostMapping("/register")
     @CrossOrigin(origins = "http://localhost:8080")
-    public String doRegister(@RequestBody UserDto userDto) {
+    public int doRegister(@RequestBody UserDto userDto) {
         String encodedPassword  = passwordEncoder.encode(userDto.getPassword());
 
         User user = new User();
@@ -45,6 +45,6 @@ public class RegisterController {
         userRepository.save(user);
         userAuthorityRepository.save(boardAuthority);
 
-        return "success";
+        return user.getId();
     }
 }

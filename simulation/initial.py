@@ -7,7 +7,7 @@ import numpy as np
 import requests
 import csv
 
-url = 'https://2.python-requests.org/en/master/user/quickstart/#make-a-request'
+url = 'http://localhost:8089/simulationDataInsert'
 
 '''
 class Slot:
@@ -108,8 +108,8 @@ for city_key, city_val in PLACE.items():
 
 r = requests.post(url, data = json.dumps(L), headers = {'Content-type':'application/json', 'Accept':'application/json'})
 print(r.status_code)
-#print(r.status)
-#print(r.raise_for_status())
+#print(json.dumps(L, indent=4))
+
 
 
 #for elem in my_objects:

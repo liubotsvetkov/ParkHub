@@ -20,7 +20,9 @@
     "sass-loader": "^11.0.1",
     "vue": "^2.5.11",
     "vue-router": "^3.5.1",
-    "vuetify": "^2.4.5"
+    "vuetify": "^2.4.5",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
   },
   "browserslist": [
     "> 1%",

@@ -36,6 +36,8 @@ public class CustomWebSecurityConfigurerAdapter extends
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/simulationDataInsert").permitAll()
+                .antMatchers("/simulationDataUpdate").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

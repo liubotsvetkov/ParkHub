@@ -22,7 +22,7 @@ module.exports = {
         loader: 'vue-loader',
         options: {
           loaders: {
-          }
+          },
           // other vue-loader options go here
         }
       },
@@ -54,7 +54,7 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
 }
 
 if (process.env.NODE_ENV === 'production') {

@@ -7,7 +7,7 @@ import numpy as np
 import requests
 import csv
 
-url = 'https://www.w3schools.com/python/demopage.php'
+url = 'http://localhost:8089/simulationDataUpdate'
 
 TIME_TO_UPDATE_IN_S = 10
 
@@ -47,7 +47,7 @@ class anotherSlot:
 	def update(self):
 		self.state ^= 1  # toggle the state with xor
 		self.last_up = str(datetime.now())
-		return {"state": int(self.state) , "last_up": self.last_up, "parking": self.parking, "slot_id": self.slot_id}
+		return {"state": self.state , "last_up": self.last_up, "parking": self.parking, "slot_id": self.slot_id}
 
 obj = []
 

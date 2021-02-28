@@ -6,6 +6,7 @@ import store from "./service/vuex-store.js";
 import Axios from "axios";
 import * as VueGoogleMaps from "vue2-google-maps";
 
+
 Axios.defaults.headers.common["Authorization"] = `Bearer ${store.state.token}`;
 
 Vue.use(VueGoogleMaps, {

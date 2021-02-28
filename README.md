@@ -16,7 +16,7 @@ Parking search and payment is now more transparent and easier for everyone with 
 
 ## Features
 
-- A live map that visualizes how many empty parking slots there are in each parking lot
+- A live map that visualizes how many empty parking slots there are in each parking lot - this is determined by our mock sensors
 - Basic user authentication system
 - Filter parkings by cities and zones
 - Easy to user interface
@@ -24,6 +24,7 @@ Parking search and payment is now more transparent and easier for everyone with 
 
 ## Future Development
 
+- Use actual sensors and implement the idea in practice
 - Expand our app to more parking lots and more cities
 - Include the ability to book parking slots for a period of time
 - Add option to pay for booking through smart card, account or credit card

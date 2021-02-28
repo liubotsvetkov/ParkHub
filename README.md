@@ -32,7 +32,7 @@ Parking search and payment is now more transparent and easier for everyone with 
 - Buy monthly parking subscriptions to make parking even easier
 - Choose the option that you are interested in certain parking lot - choose at what time range you want to receive notifications about the availability of the places in the parking lot of your choice
 - Recommend parkings in a certain radius
-- Use the analytics of the availability of the parking data to predict possible crowds to 
+- Use the analytics of the availability of the parking data to predict possible crowds, thus  help infrastructure of smarter cities
 
 ## Tech / Stack
 

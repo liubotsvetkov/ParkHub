@@ -67,7 +67,7 @@ Currently, we mock the data that we will receive from all the sensors with _.py_
 }
 ```
 
-# Running on:
+## Running on:
 ```
 http://localhost:8080
 ```
@@ -87,7 +87,4 @@ $ npm run dev
 ```
 
 ### Enjoy!
-
-# Running on:
-http://localhost:8080
  

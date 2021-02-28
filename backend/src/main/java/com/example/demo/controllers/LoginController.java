@@ -25,9 +25,6 @@ public class LoginController {
     @Autowired
     UserRepository userRepository;
 
-    @Autowired
-    BCryptPasswordEncoder passwordEncoder;
-
     @PostMapping("/login")
     @CrossOrigin(origins = "http://localhost:8080")
     public ResponseEntity<String> doLogin(@RequestBody UserDto userDto) {
@@ -36,8 +33,8 @@ public class LoginController {
         if (user.isEmpty()) {
             return new ResponseEntity<>("Wrong credentials!", HttpStatus.UNAUTHORIZED);
         }
-
-        if (passwordEncoder.matches(userDto.getPassword(), user.get(0).getPassword())) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        if (bCryptPasswordEncoder.matches(userDto.getPassword(), user.get(0).getPassword())) {
             String userAndPass = user.get(0).getUsername() + ":" + userDto.getPassword();
             byte[] bytesEncoded = Base64.encodeBase64(userAndPass.getBytes());
             String encodedUserAndPass = new String(bytesEncoded);

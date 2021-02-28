@@ -22,6 +22,6 @@ public class ParkingZone {
     @ManyToOne
     @JoinColumn(name="cityId", nullable=false)
     private City city;
-    @OneToMany(mappedBy="parkingZone", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="parkingZone", cascade = CascadeType.PERSIST)
     private List<ParkingSlot> parkingSlots;
 }

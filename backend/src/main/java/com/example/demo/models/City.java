@@ -19,6 +19,6 @@ public class City {
     private int id;
     @Column(nullable=false, unique=true)
     private String name;
-    @OneToMany(mappedBy="city", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="city", cascade = CascadeType.PERSIST)
     private List<ParkingZone> parkingZones;
 }

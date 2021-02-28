@@ -1,5 +1,7 @@
 package com.example.demo.controllers;
 
+import com.example.demo.Beans.Position;
+import com.example.demo.Beans.ParkingSlotDtoMap;
 import com.example.demo.Beans.ParkingSlotRetDto;
 import com.example.demo.models.City;
 import com.example.demo.models.ParkingSlot;
@@ -23,19 +25,19 @@ public class ParkingDataController {
 
     @GetMapping("/viewAllParkingSlots")
     @CrossOrigin(origins = "http://localhost:8080")
-    public List<ParkingSlotRetDto> viewAllParkingSlots() {
+    public List<ParkingSlotDtoMap> viewAllParkingSlots() {
         List<ParkingSlot> parkingSlots = parkingSlotRepository.findAll();
-        List<ParkingSlotRetDto> parkingSlotRetDtoList = new ArrayList<ParkingSlotRetDto>();
+        List<ParkingSlotDtoMap> parkingSlotDtoMapList = new ArrayList<ParkingSlotDtoMap>();
         for (ParkingSlot slot : parkingSlots) {
-            ParkingSlotRetDto parkingSlotRetDto = new ParkingSlotRetDto();
-            parkingSlotRetDto.setLatitude(slot.getLatitude());
-            parkingSlotRetDto.setLongitude(slot.getLongitude());
-            parkingSlotRetDto.setState(slot.getState());
-            parkingSlotRetDto.setZoneIdent(slot.getParkingZone().getZoneIdent());
-            parkingSlotRetDto.setDateTimeUpdated(slot.getDateTimeUpdated());
-            parkingSlotRetDtoList.add(parkingSlotRetDto);
+            ParkingSlotDtoMap parkingSlotDtoMap = new ParkingSlotDtoMap();
+            Position position = new Position();
+            position.setLat(slot.getLatitude());
+            position.setLng(slot.getLongitude());
+            parkingSlotDtoMap.setCoordinates(position);
+            parkingSlotDtoMap.setState(slot.getState());
+            parkingSlotDtoMapList.add(parkingSlotDtoMap);
         }
-        return parkingSlotRetDtoList;
+        return parkingSlotDtoMapList;
     }
 
     @GetMapping("/view")

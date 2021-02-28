@@ -1,2 +1,15 @@
-package com.example.demo.Beans;public class ParkingZOneDtoMap {
+package com.example.demo.Beans;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ParkingSlotDtoMap {
+    private int state;
+    private Position coordinates;
 }

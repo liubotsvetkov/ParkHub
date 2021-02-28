@@ -30,7 +30,7 @@
       <v-flex xs4 class="grey lighten-4">
         <v-container style="position: relative;top: 8%; padding-left: 0px;">
           <img
-            height="395px"
+            height="378px"
             width="650px"
             src="../assets/smarter-parking.jpg"
           />

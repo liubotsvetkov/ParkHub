@@ -24,9 +24,10 @@
                   label="Password"
                   type="password"
                 ></v-text-field>
-                <router-link to="/home">
-                  <v-btn primary large block @click="signUp()">Sign Up</v-btn>
+                <router-link :to="route">
+                  <v-btn class="button" primary large block @click="signUp()">Sign Up</v-btn>
                 </router-link>
+                <h5>{{ msg }}</h5>
               </v-form>
             </v-card>
           </v-container>
@@ -37,30 +38,45 @@
 </template>
 
 <script>
-import AuthService from "../service/auth-service.js";
+import axios from "axios";
 
 export default {
   name: "register",
   data() {
     return {
       form: {
-        username: "",
-        password: ""
+        username: null,
+        password: null
       },
+      route: "/register",
       msg: ""
     };
   },
   methods: {
     signUp() {
-      try {
+      if (!this.form.username || !this.form.password) {
+        this.msg = "Please enter both username and password";
+      } else {
         const credentials = {
           username: this.form.username,
           password: this.form.password
         };
-        const response = AuthService.signUp(credentials);
-        this.msg = response.msg;
-      } catch (error) {
-        this.msg = error.response.data.msg;
+        try {
+          axios
+            .post("http://localhost:8089/register", credentials)
+            .then(response => {
+              response.data;
+            })
+            .catch(error => {
+              console.log(error);
+              this.route = "/register";
+              this.msg = "Couldn't Sign Up";
+            });
+          this.route = "/home";
+        } catch (error) {
+          this.route = "/register";
+          this.msg = "Couldn't Sign Up";
+        }
       }
     }
   }
@@ -72,7 +88,8 @@ export default {
   background-color: #a4ce7a !important;
   padding: 25px;
 }
-.v-btn {
+.button {
   margin-top: 18px !important;
+  margin-bottom: 18px !important;
 }
 </style>

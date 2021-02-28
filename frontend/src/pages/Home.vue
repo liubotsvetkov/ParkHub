@@ -47,6 +47,7 @@
             :position="m.position"
             :clickable="true"
             :draggable="true"
+            :icon="markerColor(m.free)"
             @click="center = m.position"
           />
         </GmapMap>
@@ -80,22 +81,34 @@ export default {
           position: {
             lat: 1.38,
             lng: 103.8
-          }
+          },
+          free: true,
         },
         {
           position: {
             lat: 53.168057,
             lng: 8.654234
-          }
+          },
+          free: true,
         },
         {
           position: {
             lat: 42.659372,
             lng: 23.314266
-          }
+          },
+          free: false,
         }
       ]
     };
+  },
+  methods: {
+    markerColor(isFree) {
+      if(isFree) {
+        return 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+      } else {
+        return 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+      }
+    }
   },
   computed: {
     getZonesForCity: function() {
@@ -108,10 +121,6 @@ export default {
     }
   },
   mounted() {
-    // At this point, the child GmapMap has been mounted, but
-    // its map has not been initialized.
-    // Therefore we need to write mapRef.$mapPromise.then(() => ...)
-
     this.$refs.mapRef.$mapPromise.then(map => {
       map.panTo({ lat: 1.38, lng: 103.8 });
     });

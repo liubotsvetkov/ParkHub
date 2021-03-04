@@ -82,9 +82,6 @@ $ cd backend
 $ mvn clean package -Dmaven.test.skip=true
 $ cd ..
 $ docker-compose up --build -d
-$ cd frontend
-$ npm install
-$ npm run dev
 ```
 
 ### Enjoy!

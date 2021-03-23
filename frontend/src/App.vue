@@ -1,18 +1,28 @@
 // Test.vue
 <template>
-  <div>
+  <div id="app" class="main-container">
+    <div>
+      <v-toolbar dark prominent src="./src/assets/cars-parked.jpg">
+        <v-app-bar-nav-icon></v-app-bar-nav-icon>
+        <v-toolbar-title><h3>ParkHub: Park decisively</h3></v-toolbar-title>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+    </div>
     <v-container>
-      <v-form v-on:submit.prevent="submitForm">
-        <v-text-field v-model="form.name" label="Name"></v-text-field>
-        <v-text-field v-model="form.age" label="Age"></v-text-field>
-        <v-text-field v-model="form.height" label="Height"></v-text-field>
-        <v-btn type="submit">Submit</v-btn>
-      </v-form>
+      <router-view></router-view>
     </v-container>
-    <v-container>
-      <v-btn @click="viewAll()">View All</v-btn>
-      <div>{{ message }}</div>
-    </v-container>
+    <v-footer padless>
+      <v-card class="flex app-footer" flat tile>
+        <v-card-title>
+          <strong><h5>Get connected with us on social networks!</h5></strong>
+          <v-spacer></v-spacer>
+        </v-card-title>
+
+        <v-card-text>
+          {{ new Date().getFullYear() }} — <strong>ParkHub</strong>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </div>
 </template>
 
@@ -20,6 +30,7 @@
 import axios from "axios";
 
 export default {
+  name: "App",
   data: function() {
     return {
       message: "",
@@ -70,3 +81,15 @@ export default {
   }
 };
 </script>
+
+<style>
+.main-container {
+  background-color: #ccddff !important;
+}
+.app-footer {
+  background-color: #97b6f7 !important;
+}
+h3 {
+  font-family: "Ubuntu";
+}
+</style>

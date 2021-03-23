@@ -1,89 +1,60 @@
 package com.example.demo.controllers;
 
-import com.example.demo.Beans.Position;
-import com.example.demo.Beans.ParkingSlotDtoMap;
-import com.example.demo.Beans.ParkingSlotRetDto;
-import com.example.demo.models.City;
-import com.example.demo.models.ParkingSlot;
-import com.example.demo.models.ParkingZone;
-import com.example.demo.repository.CityRepository;
-import com.example.demo.repository.ParkingSlotRepository;
+import com.example.demo.projections.ParkingSlotSummary;
+import com.example.demo.services.ParkingDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/parkingData")
 public class ParkingDataController {
 
     @Autowired
-    ParkingSlotRepository parkingSlotRepository;
+    ParkingDataService parkingDataService;
 
-    @Autowired
-    CityRepository cityRepository;
-
-    @GetMapping("/viewAllParkingSlots")
+    @GetMapping("/viewAll")
     @CrossOrigin(origins = "http://localhost:8080")
-    public List<ParkingSlotDtoMap> viewAllParkingSlots() {
-        List<ParkingSlot> parkingSlots = parkingSlotRepository.findAll();
-        List<ParkingSlotDtoMap> parkingSlotDtoMapList = new ArrayList<ParkingSlotDtoMap>();
-        for (ParkingSlot slot : parkingSlots) {
-            ParkingSlotDtoMap parkingSlotDtoMap = new ParkingSlotDtoMap();
-            Position position = new Position();
-            position.setLat(slot.getLatitude());
-            position.setLng(slot.getLongitude());
-            parkingSlotDtoMap.setCoordinates(position);
-            parkingSlotDtoMap.setState(slot.getState());
-            parkingSlotDtoMapList.add(parkingSlotDtoMap);
-        }
-        return parkingSlotDtoMapList;
+    public Collection<ParkingSlotSummary> viewAllParkingSlots() {
+        Collection<ParkingSlotSummary> parkingSlots = parkingDataService.viewAllParkingSlots();
+        return parkingSlots;
     }
 
-    @GetMapping("/view")
+    @GetMapping("/city")
     @CrossOrigin(origins = "http://localhost:8080")
-    public List<ParkingSlotRetDto> viewParkingSlotByCity(@RequestParam("city") String city) {
-        List<City> cities = cityRepository.findByName(city);
-        List<ParkingSlotRetDto> parkingSlotRetDtoList = new ArrayList<ParkingSlotRetDto>();
-        for (City cityIter : cities) {
-            for (ParkingZone zoneIter : cityIter.getParkingZones()) {
-                for (ParkingSlot slotIter : zoneIter.getParkingSlots()) {
-                    ParkingSlotRetDto parkingSlotRetDto = new ParkingSlotRetDto();
-                    parkingSlotRetDto.setLatitude(slotIter.getLatitude());
-                    parkingSlotRetDto.setLongitude(slotIter.getLongitude());
-                    parkingSlotRetDto.setState(slotIter.getState());
-                    parkingSlotRetDto.setZoneIdent(slotIter.getParkingZone().getZoneIdent());
-                    parkingSlotRetDto.setDateTimeUpdated(slotIter.getDateTimeUpdated());
-                    parkingSlotRetDtoList.add(parkingSlotRetDto);
-                }
-            }
-        }
-        return parkingSlotRetDtoList;
+    public Collection<ParkingSlotSummary> viewParkingSlotByCity(@RequestParam("city") String cityName) {
+        Collection<ParkingSlotSummary> parkingSlots = parkingDataService.viewParkingSlotsByCity(cityName);
+        return parkingSlots;
     }
 
-    @GetMapping("/view/zone")
+    @GetMapping("/neighborhood")
     @CrossOrigin(origins = "http://localhost:8080")
-    public List<ParkingSlotRetDto> viewParkingSlotByCityAndZone(@RequestParam("city") String city,
-                                                         @RequestParam("zone") String zone) {
-        List<City> cities = cityRepository.findByName(city);
-        List<ParkingSlotRetDto> parkingSlotRetDtoList = new ArrayList<ParkingSlotRetDto>();
-        for (City cityIter : cities) {
-            for (ParkingZone zoneIter : cityIter.getParkingZones()) {
-                if (zoneIter.getZoneIdent().equals(zone)) {
-                    for (ParkingSlot slotIter : zoneIter.getParkingSlots()) {
-                        ParkingSlotRetDto parkingSlotRetDto = new ParkingSlotRetDto();
-                        parkingSlotRetDto.setLatitude(slotIter.getLatitude());
-                        parkingSlotRetDto.setLongitude(slotIter.getLongitude());
-                        parkingSlotRetDto.setState(slotIter.getState());
-                        parkingSlotRetDto.setZoneIdent(slotIter.getParkingZone().getZoneIdent());
-                        parkingSlotRetDto.setDateTimeUpdated(slotIter.getDateTimeUpdated());
-                        parkingSlotRetDtoList.add(parkingSlotRetDto);
-                    }
-                }
-            }
-        }
-        return parkingSlotRetDtoList;
+    public Collection<ParkingSlotSummary> viewParkingSlotByCityAndNeigh(@RequestParam("city") String cityName,
+                                                                        @RequestParam("neighborhood") String neighName) {
+        Collection<ParkingSlotSummary> parkingSlots = parkingDataService.viewParkingSlotsByNeighAndCity(neighName, cityName);
+        return parkingSlots;
     }
 
+    @GetMapping("/zone")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public Collection<ParkingSlotSummary> viewParkingSlotByCityNeighAndZone(@RequestParam("city") String cityName,
+                                                                            @RequestParam("neighborhood") String neighName,
+                                                                            @RequestParam("zone") String zoneIdent) {
+        Collection<ParkingSlotSummary> parkingSlots = parkingDataService
+                .viewParkingSlotsByZoneNeighAndCity(zoneIdent, neighName, cityName);
+        return parkingSlots;
+    }
 
+    @GetMapping("/slot")
+    @CrossOrigin(origins = "http://localhost:8080")
+    public Optional<ParkingSlotSummary> viewParkingSlotByCityNeighZoneAndSlot(@RequestParam("city") String cityName,
+                                                                              @RequestParam("neighborhood") String neighName,
+                                                                              @RequestParam("zone") String zoneIdent,
+                                                                              @RequestParam("slot") String slotIdent) {
+        Optional<ParkingSlotSummary> parkingSlot = parkingDataService
+                .viewParkingSlotsBySlotZoneNeighAndCity(slotIdent, zoneIdent, neighName, cityName);
+        return parkingSlot;
+    }
 }

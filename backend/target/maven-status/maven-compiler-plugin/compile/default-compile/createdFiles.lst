@@ -6,12 +6,14 @@ com\example\demo\models\ParkingZone.class
 com\example\demo\models\ParkingSlot.class
 com\example\demo\Beans\SimUpdateData.class
 com\example\demo\repository\UserRepository.class
+com\example\demo\Beans\ParkingSlotDtoMap.class
 com\example\demo\repository\ParkingZoneRepository.class
 com\example\demo\repository\CityRepository.class
 com\example\demo\controllers\RegisterController.class
 com\example\demo\Beans\UserDto.class
 com\example\demo\exceptions\InvalidPersonReferenceException.class
 com\example\demo\models\City.class
+com\example\demo\Beans\Position.class
 com\example\demo\models\UserAuthority.class
 com\example\demo\models\Payment.class
 com\example\demo\controllers\LoginController.class

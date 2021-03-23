@@ -7,7 +7,7 @@ import numpy as np
 import requests
 import csv
 
-url = 'http://localhost:8089/simulationDataInsert'
+url = 'http://localhost:8089/simulationData'
 
 '''
 class Slot:

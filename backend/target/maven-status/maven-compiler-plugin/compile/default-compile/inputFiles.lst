@@ -8,6 +8,7 @@ D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\CityDto.j
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\controllers\RegisterController.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\models\City.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\services\PersonService.java
+D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\ParkingSlotDtoMap.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\repository\ParkingSlotRepository.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\SimInsertData.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\controllers\LoginController.java
@@ -26,6 +27,7 @@ D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\utilities\AuthU
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\ParkingSlotRetDto.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\controllers\ParkingDataController.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\ParkingZoneDto.java
+D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\Position.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\controllers\SimulationDataController.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\ParkingSlotDto.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\repository\PaymentRepository.java

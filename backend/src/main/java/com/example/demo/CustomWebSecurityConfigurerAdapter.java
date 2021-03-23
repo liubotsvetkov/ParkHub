@@ -22,10 +22,8 @@ public class CustomWebSecurityConfigurerAdapter extends
     @Autowired
     private DataSource dataSource;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -36,8 +34,7 @@ public class CustomWebSecurityConfigurerAdapter extends
                 .authorizeRequests()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
-                .antMatchers("/simulationDataInsert").permitAll()
-                .antMatchers("/simulationDataUpdate").permitAll()
+                .antMatchers("/simulationData").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -52,7 +49,7 @@ public class CustomWebSecurityConfigurerAdapter extends
         auth
                 .jdbcAuthentication()
                 .dataSource(dataSource)
-                .passwordEncoder(passwordEncoder())
+                .passwordEncoder(passwordEncoder)
                 .usersByUsernameQuery(
                         "SELECT username, password, enabled from users where username = ?")
                 .authoritiesByUsernameQuery(

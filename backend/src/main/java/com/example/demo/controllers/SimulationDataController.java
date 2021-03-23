@@ -1,66 +1,28 @@
 package com.example.demo.controllers;
 
 import com.example.demo.Beans.*;
-import com.example.demo.models.City;
-import com.example.demo.models.ParkingSlot;
-import com.example.demo.models.ParkingZone;
-import com.example.demo.models.Person;
-import com.example.demo.repository.CityRepository;
-import com.example.demo.repository.ParkingSlotRepository;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.exceptions.ParkingSlotExistsException;
+import com.example.demo.services.SimulationDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.Date;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/simulationData")
 public class SimulationDataController {
 
     @Autowired
-    private CityRepository cityRepository;
+    private SimulationDataService simulationDataService;
 
-    @Autowired
-    private ParkingSlotRepository parkingSlotRepository;
-
-    @PostMapping("/simulationDataInsert")
+    @PostMapping
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public String insertData(@RequestBody List<CityDto> citiesDto) {
-        for (CityDto cityDto : citiesDto) {
-            City city = new City();
-            city.setName(cityDto.getName());
-            ParkingZone parkingZone = new ParkingZone();
-            for (ParkingZoneDto parkingZoneDto : cityDto.getParkingZones()) {
-                parkingZone.setZoneIdent(parkingZoneDto.getZoneIdent());
-                ParkingSlot parkingSlot = new ParkingSlot();
-                for (ParkingSlotDto parkingSlotDto : parkingZoneDto.getParkingSlots()) {
-                    parkingSlot.setLatitude(parkingSlotDto.getLatitude());
-                    parkingSlot.setLongitude(parkingSlotDto.getLongitude());
-                    parkingSlot.setState(parkingSlotDto.getState());
-                    parkingSlot.setSlotIdent(parkingSlotDto.getSlotIdent());
-                    parkingSlot.setDateTimeUpdated(parkingSlotDto.getDateTimeUpdated());
-                    parkingSlot.setParkingZone(parkingZone);
-                }
-                if (parkingZone.getParkingSlots() == null) {
-                    parkingZone.setParkingSlots(new ArrayList<ParkingSlot>());
-                }
-                parkingZone.getParkingSlots().add(parkingSlot);
-                parkingZone.setCity(city);
-            }
-            if (city.getParkingZones() == null) {
-                city.setParkingZones(new ArrayList<ParkingZone>());
-            }
-            city.getParkingZones().add(parkingZone);
-            cityRepository.save(city);
-        }
-        return "success";
+    public long insertData(@RequestBody List<CityDto> cities) throws ParkingSlotExistsException {
+        long parkingSlotCount = simulationDataService.insertData(cities);
+        return parkingSlotCount;
     }
 
-    @PostMapping("/simulationDataUpdate")
+    /**
+    @PutMapping
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     public String updateData(@RequestBody List<SimUpdateData> updateData) {
         for (SimUpdateData data : updateData) {
@@ -76,5 +38,5 @@ public class SimulationDataController {
             parkingSlotRepository.save(parkingSlots.get(0));
         }
         return "success";
-    }
+    }*/
 }

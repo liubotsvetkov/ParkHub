@@ -1,5 +1,5 @@
 let kafka = require('kafka-node');
-let client = new kafka.KafkaClient({kafkaHost: 'localhost:9092'});
+let client = new kafka.KafkaClient({kafkaHost: 'kafka:9092'});
 let fs = require('fs');
 
 let topicToCreate = [{

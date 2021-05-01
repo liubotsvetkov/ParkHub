@@ -27,18 +27,18 @@ services:
     networks:
       - app-network
 
-  frontend-app:
-    container_name: frontend-app
-    build: ./frontend
-    image: "frontend-app:latest"
-    environment:
-      - HOST=0.0.0.0
-    ports:
-      - "8080:8080"
-    depends_on:
-      - demo-app
-    networks:
-      - app-network
+  #frontend-app:
+   # container_name: frontend-app
+    #build: ./frontend
+    #image: "frontend-app:latest"
+    #environment:
+     # - HOST=0.0.0.0
+    #ports:
+     # - "8080:8080"
+    #depends_on:
+     # - demo-app
+    #networks:
+     # - app-network
 
   zookeeper:
     image: wurstmeister/zookeeper

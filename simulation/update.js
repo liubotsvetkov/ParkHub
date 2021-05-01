@@ -1,39 +1,23 @@
+let fs = require('fs');
 let kafka = require('kafka-node');
 let client = new kafka.KafkaClient({kafkaHost: 'kafka:9092'});
-let fs = require('fs');
-
-let topicToCreate = [{
-  topic: 'sensor_data',
-  partitions: 3,
-  replicationFactor: 1
-}];
-
-client.createTopics(topicToCreate, (error, result) => {
-  console.log(JSON.stringify(result));
-});
-
 let HighLevelProducer = kafka.HighLevelProducer;
 producer = new HighLevelProducer(client);
+let kafkaTopic = 'sensor_data';
+
+createKafkaTopic();
 
 producer.on('ready', function () {
 
     let dataList = JSON.parse(fs.readFileSync('data.json', 'utf8'));
     let indexArray = [];
-    let payload = [{topic: 'sensor_data', messages: ''}];
 
     setInterval(async () => {
 
         indexArray = getRandomArrIndices(dataList);
         dataList = shuffleDataList(indexArray, dataList);
+        sendData(indexArray, dataList);
 
-        indexArray.forEach(async (index) => {
-            payload[0].messages = JSON.stringify(dataList[index]);
-
-            await producer.send(payload, function (err, data) {
-                if (err) throw err;
-                console.log(data);
-            });
-        });
     }, 5000);
 });
 
@@ -61,4 +45,32 @@ function shuffleDataList(indexArray, dataList) {
     });
 
     return dataList;
+}
+
+function sendData(indexArray, dataList) {
+
+    let payload = [{topic: kafkaTopic, messages: ''}];
+
+    indexArray.forEach(async (index) => {
+
+        payload[0].messages = JSON.stringify(dataList[index]);
+
+        await producer.send(payload, function (err, data) {
+            if (err) throw err;
+            console.log(data);
+        });
+    });
+}
+
+function createKafkaTopic() {
+
+    let topicToCreate = [{
+      topic: kafkaTopic,
+      partitions: 3,
+      replicationFactor: 1
+    }];
+
+    client.createTopics(topicToCreate, (error, result) => {
+      console.log(JSON.stringify(result));
+    });
 }

@@ -43,28 +43,30 @@ public class ConsumerLoop implements Runnable {
 
             while (true) {
                 ConsumerRecords<String, SimUpdateData> updateData = consumer.poll(Duration.ofMillis(Long.MAX_VALUE));
-
-                for (ConsumerRecord<String, SimUpdateData> data : updateData) {
-                    Optional<ParkingSlot> parkingSlot = parkingSlotRepository
-                            .findByLatitudeAndLongitude(data.value().getLatitude(), data.value().getLongitude());
-
-                    if (parkingSlot.isPresent()) {
-                        System.out.println("inside if");
-                        parkingSlot.get().setState(data.value().getState());
-                        parkingSlot.get().setDateTimeUpdated(new Date());
-                    } else {
-                        throw new ParkingSlotNotFoundException(
-                                String.format("Parking slot with latitude %f and longitude %f is not found",
-                                        parkingSlot.get().getLatitude(),
-                                        parkingSlot.get().getLongitude()));
-                    }
-                    parkingSlotRepository.save(parkingSlot.get());
-                }
+                this.processMessages(updateData);
             }
         } catch (WakeupException | ParkingSlotNotFoundException | NullPointerException e) {
             e.printStackTrace();
         } finally {
             consumer.close();
+        }
+    }
+
+    private void processMessages(ConsumerRecords<String, SimUpdateData> updateData) throws ParkingSlotNotFoundException {
+        for (ConsumerRecord<String, SimUpdateData> data : updateData) {
+            Optional<ParkingSlot> parkingSlot = parkingSlotRepository
+                    .findByLatitudeAndLongitude(data.value().getLatitude(), data.value().getLongitude());
+
+            if (parkingSlot.isPresent()) {
+                parkingSlot.get().setState(data.value().getState());
+                parkingSlot.get().setDateTimeUpdated(new Date());
+            } else {
+                throw new ParkingSlotNotFoundException(
+                        String.format("Parking slot with latitude %f and longitude %f is not found",
+                                parkingSlot.get().getLatitude(),
+                                parkingSlot.get().getLongitude()));
+            }
+            parkingSlotRepository.save(parkingSlot.get());
         }
     }
 

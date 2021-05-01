@@ -22,6 +22,7 @@ D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\entities\User.j
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\repositories\PaymentRepository.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\Beans\UserDto.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\kafka\ConsumerLoop.java
+D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\utilities\BeanUtil.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\utilities\AuthUtility.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\kafka\KafkaJsonDeserializer.java
 D:\AUBG Hack 3.0\demo-app\backend\src\main\java\com\example\demo\configurations\AuthConfig.java

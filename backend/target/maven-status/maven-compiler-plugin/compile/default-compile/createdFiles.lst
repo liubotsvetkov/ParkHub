@@ -10,6 +10,7 @@ com\example\demo\repositories\CityRepository.class
 com\example\demo\entities\UserAuthority.class
 com\example\demo\repositories\ParkingZoneRepository.class
 com\example\demo\Beans\SimUpdateData.class
+com\example\demo\utilities\BeanUtil.class
 com\example\demo\entities\ParkingZone.class
 com\example\demo\repositories\ParkingSlotRepository.class
 com\example\demo\controllers\RegisterController.class

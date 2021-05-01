@@ -15,6 +15,8 @@ public interface ParkingSlotRepository extends JpaRepository<ParkingSlot, Intege
 
     Collection<ParkingSlotSummary> findByParkingZoneNeighborhoodCityName(String cityName);
 
+    Optional<ParkingSlot> findByLatitudeAndLongitude(double latitude, double longitude);
+
     @Query("select ps from ParkingSlot ps join ps.parkingZone pz join pz.neighborhood nb join nb.city c " +
             "where nb.name=?1 and c.name=?2")
     Collection<ParkingSlotSummary> getSlotByNeighCity(String neighName, String cityName);

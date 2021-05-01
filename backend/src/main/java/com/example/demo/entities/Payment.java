@@ -13,14 +13,18 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name="payment")
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_payment", nullable = false)
     private int id;
-    @Column(nullable=false)
+    @Column(name = "payment_date", nullable = false)
     private Date paymentDate;
-    @Column(nullable=false, length=255)
-    private String username;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="id_user")
+    private User user;
 
     @PrePersist
     protected void onCreate() {

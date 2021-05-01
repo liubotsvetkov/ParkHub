@@ -13,12 +13,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity(name = "user_authorities")
 public class UserAuthority {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user_authorities", nullable = false)
     private int id;
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name="id_user", nullable=false)
     private User user;
-    @Column(nullable=false, length=255)
+    @Column(name="authority", nullable=false, length=255)
     private String authority;
 }

@@ -14,16 +14,19 @@ import java.util.List;
 @NoArgsConstructor
 @Entity(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_user", nullable = false)
     private int id;
-    @Column(unique=true, nullable=false, length=255)
+    @Column(name = "username", unique=true, nullable=false, length=255)
     private String username;
-    @Column(nullable=false, length=255)
+    @Column(name = "password", nullable=false, length=255)
     private String password;
-    @Column(nullable=false)
+    @Column(name = "enabled", nullable=false)
     private Boolean enabled;
-    @Column(nullable=false)
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<UserAuthority> authorities;
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Payment> payments;
 }

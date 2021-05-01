@@ -1,28 +1,27 @@
 package com.example.demo.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="City")
+@Table(name="city")
 public class City {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_city", nullable = false)
     private int id;
-    @Column(nullable=false, unique=true, length=255)
+    @Column(name = "name", nullable = false, unique = true, length = 255)
     private String name;
-    @OneToMany(mappedBy="city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Neighborhood> neighborhoods;
 

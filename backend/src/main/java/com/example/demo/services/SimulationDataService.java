@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class SimulationDataService {
     private NeighborhoodRepository neighborhoodRepository;
 
     @Transactional
-    public long insertData(List<CityDto> citiesDto) throws ParkingSlotExistsException {
+    public void insertData(List<CityDto> citiesDto) throws ParkingSlotExistsException {
         for (CityDto cityDto : citiesDto) {
             Optional<City> cityRepo = cityRepository.findByName(cityDto.getName());
             City city = cityRepo.orElse(new City(cityDto.getName(), new ArrayList<Neighborhood>()));
@@ -65,10 +64,10 @@ public class SimulationDataService {
                                         parkingSlotDto.getSlotIdent(), parkingZoneDto.getZoneIdent(),
                                         neighborhoodDto.getName(), cityDto.getName());
                         if (slotRepo.isPresent()) {
-                            throw new ParkingSlotExistsException("Parking slot " + slotRepo.get().getSlotIdent() + " already exists");
+                            throw new ParkingSlotExistsException(
+                                    String.format("Parking slot %s already exists", slotRepo.get().getSlotIdent()));
                         }
                         ParkingSlot parkingSlot = new ParkingSlot(parkingSlotDto.getSlotIdent(),
-                                parkingSlotDto.getDateTimeUpdated(),
                                 parkingSlotDto.getState(),
                                 parkingSlotDto.getLatitude(),
                                 parkingSlotDto.getLongitude(),
@@ -79,6 +78,5 @@ public class SimulationDataService {
             }
             cityRepository.save(city);
         }
-        return parkingSlotRepository.count();
     }
 }

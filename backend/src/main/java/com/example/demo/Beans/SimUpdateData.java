@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SimUpdateData {
     private int state;
-    private String last_up;
-    private String parking;
-    private String slot_id;
+    private double latitude;
+    private double longitude;
 }

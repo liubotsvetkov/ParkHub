@@ -13,21 +13,22 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name="Neighborhood", uniqueConstraints=
-        @UniqueConstraint(columnNames={"cityId", "name"})
+@Table(name="neighborhood", uniqueConstraints=
+        @UniqueConstraint(columnNames={"id_neighborhood", "name"})
 )
 public class Neighborhood {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_neighborhood", nullable = false)
     private int id;
-    @Column(nullable=false, length=255)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name="cityId")
+    @JoinColumn(name = "id_city")
     private City city;
-    @OneToMany(mappedBy="neighborhood", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "neighborhood", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ParkingZone> parkingZones;
 

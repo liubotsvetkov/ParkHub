@@ -5,12 +5,12 @@ services:
   mysql-db:
     container_name: mysql-db
     image: "mysql:latest"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test
-      MYSQL_USER: root
+    env_file:
+      - ./database/db.env
     ports:
       - "3306:3306"
+    volumes:
+      - ./database/db-create.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-network
 
@@ -22,6 +22,8 @@ services:
       - "8089:8089"
     depends_on:
       - mysql-db
+      - kafka
+      - zookeeper
     networks:
       - app-network
 
@@ -35,6 +37,41 @@ services:
       - "8080:8080"
     depends_on:
       - demo-app
+    networks:
+      - app-network
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - app-network
+
+  kafka:
+    image: wurstmeister/kafka
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LOG_RETENTION_MS: 30000
+      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 10000
+    networks:
+      - app-network
+
+  simulator:
+    container_name: simulator
+    build: ./simulation
+    image: "simulator:latest"
+    ports:
+      - "9090:9090"
+    environment:
+      NODE_OPTIONS: --max_old_space_size=4096
+    depends_on:
+      - kafka
+      - zookeeper
     networks:
       - app-network
 

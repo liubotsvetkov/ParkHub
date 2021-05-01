@@ -13,27 +13,29 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name="ParkingSlot", uniqueConstraints= {
-        @UniqueConstraint(columnNames = {"parkingZoneId", "slotIdent"}),
+@Table(name="parking_slot", uniqueConstraints= {
+        @UniqueConstraint(columnNames = {"id_parking_zone", "slot_ident"}),
         @UniqueConstraint(columnNames = {"latitude", "longitude"})
 })
 public class ParkingSlot {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_parking_slot", nullable = false)
     private int id;
-    @Column(nullable=false, length=255)
+    @Column(name = "slot_ident", nullable=false, length=255)
     private String slotIdent;
-    @Column(nullable=false)
+    @Column(name = "date_time_updated", nullable=false)
     private Date dateTimeUpdated;
-    @Column(nullable=false)
+    @Column(name = "state", nullable=false)
     private int state;
-    @Column(nullable=false)
+    @Column(name = "latitude", nullable=false)
     private double latitude;
-    @Column(nullable=false)
+    @Column(name = "longitude", nullable=false)
     private double longitude;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference
-    @JoinColumn(name="parkingZoneId", nullable=false)
+    @JoinColumn(name="id_parking_zone", nullable=false)
     private ParkingZone parkingZone;
 
     @PrePersist
@@ -54,9 +56,8 @@ public class ParkingSlot {
         return Double.compare(that.latitude, latitude) == 0 && Double.compare(that.longitude, longitude) == 0 && slotIdent.equals(that.slotIdent);
     }
 
-    public ParkingSlot(String slotIdent, Date dateTimeUpdated, int state, double latitude, double longitude, ParkingZone parkingZone) {
+    public ParkingSlot(String slotIdent, int state, double latitude, double longitude, ParkingZone parkingZone) {
         this.slotIdent = slotIdent;
-        this.dateTimeUpdated = dateTimeUpdated;
         this.state = state;
         this.latitude = latitude;
         this.longitude = longitude;

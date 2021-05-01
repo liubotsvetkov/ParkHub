@@ -10,3 +10,6 @@ backend/target/
 *.iml
 *.ipr
 
+#node modules
+simulation/node_modules
+

@@ -1,9 +1,8 @@
 let fs = require('fs');
 let kafka = require('kafka-node');
-let client = new kafka.KafkaClient({kafkaHost: 'kafka:9092'});
+let client = new kafka.KafkaClient({kafkaHost: process.env.KAFKA_HOST});
 let HighLevelProducer = kafka.HighLevelProducer;
 producer = new HighLevelProducer(client);
-let kafkaTopic = 'sensor_data';
 
 createKafkaTopic();
 
@@ -49,7 +48,7 @@ function shuffleDataList(indexArray, dataList) {
 
 function sendData(indexArray, dataList) {
 
-    let payload = [{topic: kafkaTopic, messages: ''}];
+    let payload = [{topic: process.env.KAFKA_TOPIC, messages: ''}];
 
     indexArray.forEach(async (index) => {
 
@@ -65,9 +64,9 @@ function sendData(indexArray, dataList) {
 function createKafkaTopic() {
 
     let topicToCreate = [{
-      topic: kafkaTopic,
-      partitions: 3,
-      replicationFactor: 1
+      topic: process.env.KAFKA_TOPIC,
+      partitions: process.env.TOPIC_PARTITIONS,
+      replicationFactor: process.env.TOPIC_REPLICATION_FACTOR
     }];
 
     client.createTopics(topicToCreate, (error, result) => {

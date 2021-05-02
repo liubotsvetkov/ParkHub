@@ -20,6 +20,14 @@ services:
     image: "demo-app:latest"
     ports:
       - "8089:8089"
+    environment:
+      KAFKA_HOST: kafka:9092
+      KAFKA_TOPIC: sensor_data
+      KAFKA_CONSUMER_GROUP: consumer-sensor-data-group
+      DB_URL: jdbc:mysql://mysql-db:3306/parking_data_db?autoReconnect=true
+      SERVER_PORT: 8089
+    env_file:
+      - ./backend/secrets.env
     depends_on:
       - mysql-db
       - kafka
@@ -69,6 +77,10 @@ services:
       - "9090:9090"
     environment:
       NODE_OPTIONS: --max_old_space_size=4096
+      KAFKA_HOST: kafka:9092
+      KAFKA_TOPIC: sensor_data
+      TOPIC_PARTITIONS: 3
+      TOPIC_REPLICATION_FACTOR: 1
     depends_on:
       - kafka
       - zookeeper

@@ -10,8 +10,8 @@ public class ConsumerExecutor {
     public void executeConsumers() {
 
         final int numConsumers = 3;
-        final String groupId = "consumer-sensor-data-group";
-        final List<String> topics = Arrays.asList("sensor_data");
+        final String groupId = System.getenv("KAFKA_CONSUMER_GROUP");
+        final List<String> topics = Arrays.asList(System.getenv("KAFKA_TOPIC"));
         ExecutorService executor = Executors.newFixedThreadPool(numConsumers);
 
         final List<ConsumerLoop> consumers = new ArrayList<>();
@@ -27,7 +27,7 @@ public class ConsumerExecutor {
             }
             executor.shutdown();
             try {
-                executor.awaitTermination(5000, TimeUnit.MILLISECONDS);
+                executor.awaitTermination(10000, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

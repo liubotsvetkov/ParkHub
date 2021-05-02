@@ -28,7 +28,7 @@ public class ConsumerLoop implements Runnable {
         this.topics = topics;
         this.parkingSlotRepository = BeanUtil.getBean(ParkingSlotRepository.class);
         Properties props = new Properties();
-        props.put("bootstrap.servers", "kafka:9092");
+        props.put("bootstrap.servers", System.getenv("KAFKA_HOST"));
         props.put("group.id", groupId);
         props.put("key.deserializer", StringDeserializer.class.getName());
         props.put("value.deserializer", KafkaJsonDeserializer.class.getName());

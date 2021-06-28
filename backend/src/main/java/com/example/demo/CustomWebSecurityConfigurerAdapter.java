@@ -33,6 +33,7 @@ public class CustomWebSecurityConfigurerAdapter extends
                 .antMatchers("/register").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/simulationData").permitAll()
+                .antMatchers("/parkingData/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

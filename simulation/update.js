@@ -23,7 +23,7 @@ producer.on('ready', function () {
 function getRandomArrIndices(dataList) {
 
     let arrLength = dataList.length;
-    let n = Math.floor(Math.random() * arrLength) + 1;
+    let n = Math.floor(Math.random() * (arrLength - 1)) + 1;
 
     let indexArr = [];
 

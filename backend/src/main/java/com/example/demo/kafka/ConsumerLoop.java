@@ -10,6 +10,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.time.Duration;
 import java.util.Date;
@@ -23,12 +24,15 @@ public class ConsumerLoop implements Runnable {
     private final int id;
     private ParkingSlotRepository parkingSlotRepository;
 
+    @Value("${KAFKA_HOST}")
+    private String kafkaHost;
+
     public ConsumerLoop(int id, String groupId, List<String> topics) {
         this.id = id;
         this.topics = topics;
         this.parkingSlotRepository = BeanUtil.getBean(ParkingSlotRepository.class);
         Properties props = new Properties();
-        props.put("bootstrap.servers", System.getenv("KAFKA_HOST"));
+        props.put("bootstrap.servers", kafkaHost);
         props.put("group.id", groupId);
         props.put("key.deserializer", StringDeserializer.class.getName());
         props.put("value.deserializer", KafkaJsonDeserializer.class.getName());

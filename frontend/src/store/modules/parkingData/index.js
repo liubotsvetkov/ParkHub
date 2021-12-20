@@ -5,7 +5,7 @@ import getters from './getters.js';
 export default {
   state() {
     return {
-      parkingData: []
+      parkingSlots: []
     };
   },
   mutations,

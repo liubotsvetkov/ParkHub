@@ -1,8 +1,8 @@
 export default {
-  parkingData(state) {
-    return state.parkingData;
+  parkingSlots(state) {
+    return state.parkingSlots;
   },
-  hasParkingData(state) {
-    return state.parkingData && state.parkingData.length > 0;
+  hasParkingSlots(state) {
+    return state.parkingSlots && state.parkingSlots.length > 0;
   }
 };

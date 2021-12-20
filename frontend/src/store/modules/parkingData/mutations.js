@@ -1,5 +1,5 @@
 export default {
-  setParkingData(state, payload) {
-    state.parkingData = payload;
+  setParkingSlots(state, payload) {
+    state.parkingSlots = payload;
   }
 };

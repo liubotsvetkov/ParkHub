@@ -38,7 +38,8 @@ export default {
  },
  props: {
     data: Array,
-    isUpdateMapTriggered: Boolean
+    isUpdateMapTriggered: Boolean,
+    isFitBoundsTriggered: Boolean
  },
  methods: {
    setupLeafletMap: function () {
@@ -66,10 +67,11 @@ export default {
 
     this.mapDiv.addLayer(this.markers);
 
-    var bounds = new L.LatLngBounds(arrayOfLatLngs);
-
-    this.mapDiv.fitBounds(bounds);
-    this.mapDiv.invalidateSize();
+    if (this.isFitBoundsTriggered) {
+        let bounds = new L.LatLngBounds(arrayOfLatLngs);
+        this.mapDiv.fitBounds(bounds);
+        this.mapDiv.invalidateSize();
+    }
    },
  },
  watch: {

@@ -13,7 +13,7 @@
     </base-card>
   </section>
   <section>
-    <the-map :data="parkingSlots" :isUpdateMapTriggered="updateMapTrigger">
+    <the-map :data="parkingSlots" :isUpdateMapTriggered="updateMapTrigger" :isFitBoundsTriggered="fitBounds">
     </the-map>
   </section>
 </div>
@@ -23,6 +23,7 @@
 import TheMap from '../components/ui/TheMap.vue';
 import CustomSelect from '../components/ui/CustomSelect.vue';
 import axios from 'axios';
+import { BACKEND_URL } from '../utils/Constants.js';
 
 export default {
   components: {
@@ -37,7 +38,8 @@ export default {
         neighborhoods: [],
         parkingSlots: [],
         neighborhoodsDisabled: true,
-        updateMapTrigger: false
+        updateMapTrigger: false,
+        fitBounds: false
     }
   },
   computed: {
@@ -84,8 +86,9 @@ export default {
         return response;
     },
     loadCities: async function() {
+    console.log("process env " + BACKEND_URL);
 
-        const response = await this.makeHttpRequest("get", "http://localhost:8089/cities");
+        const response = await this.makeHttpRequest("get", `${BACKEND_URL}/cities`);
 
         this.cities = response.data;
         const defaultChoice = {id: -1, name: ""};
@@ -93,32 +96,33 @@ export default {
     },
     loadNeighborhoodsByCity: async function() {
 
-        const response = await this.makeHttpRequest("get", `http://localhost:8089/neighborhoods/byCity/${this.selectedCityId}`);
+        const response = await this.makeHttpRequest("get", `${BACKEND_URL}/neighborhoods/byCity/${this.selectedCityId}`);
 
         this.neighborhoods = response.data;
         const defaultChoice = {id: -1, name: ""};
         this.neighborhoods.unshift(defaultChoice);
     },
-    loadParkingSlots: async function() {
+    loadParkingSlots: async function(fitBounds) {
 
         let response = null;
 
         if (this.selectedNeighborhoodId != -1) {
-            response = await this.makeHttpRequest("get", `http://localhost:8089/parkingSlots/byNeighborhood/${this.selectedNeighborhoodId}`);
+            response = await this.makeHttpRequest("get", `${BACKEND_URL}/parkingSlots/byNeighborhood/${this.selectedNeighborhoodId}`);
         }
         else if (this.selectedCityId != -1) {
-            response = await this.makeHttpRequest("get", `http://localhost:8089/parkingSlots/byCity/${this.selectedCityId}`);
+            response = await this.makeHttpRequest("get", `${BACKEND_URL}/parkingSlots/byCity/${this.selectedCityId}`);
         }
         else {
-            response = await this.makeHttpRequest("get", "http://localhost:8089/parkingSlots");
+            response = await this.makeHttpRequest("get", `${BACKEND_URL}/parkingSlots`);
         }
 
         this.parkingSlots = response.data;
-        this.updateMapTrigger = !this.updateMapTrigger
+        this.updateMapTrigger = !this.updateMapTrigger;
+        this.fitBounds = fitBounds;
     },
     updateLoopParkingSlots: function() {
         this.polling = setInterval(async () => {
-            this.loadParkingSlots();
+            this.loadParkingSlots(false);
         }, 5000)
     }
   },
@@ -135,15 +139,15 @@ export default {
         }
 
         this.selectedNeighborhood = "";
-        this.loadParkingSlots();
+        this.loadParkingSlots(true);
     },
     selectedNeighborhood: function() {
-        this.loadParkingSlots();
+        this.loadParkingSlots(true);
     }
   },
   mounted() {
     this.loadCities();
-    this.loadParkingSlots();
+    this.loadParkingSlots(true);
     this.updateLoopParkingSlots();
   },
 };

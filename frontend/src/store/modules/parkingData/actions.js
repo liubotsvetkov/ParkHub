@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { BACKEND_URL } from '../../../utils/Constants.js';
 
 export default {
 
@@ -6,7 +7,7 @@ export default {
 
     const response = await axios({
         method: "get",
-        url: "http://localhost:8089/parkingSlots",
+        url: BACKEND_URL + '/parkingSlots',
         headers: {
           "Access-Control-Allow-Origin": true
         }

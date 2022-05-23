@@ -50,11 +50,12 @@ export default {
      }).addTo(this.mapDiv);
    },
    populateLeafletMap: function () {
-
     let arrayOfLatLngs = [];
 
+    if (this.markers) {
+        this.markers.clearLayers();
+    }
     this.markers = L.featureGroup();
-    this.markers.clearLayers();
 
     for (let i = 0; i < this.data.length; i++) {
 

@@ -40,6 +40,7 @@ services:
     build: ./frontend
     image: "frontend-app:latest"
     environment:
+        - BACKEND_URL=http://demo-app:8089
         - HOST=0.0.0.0
     ports:
       - "8080:8080"

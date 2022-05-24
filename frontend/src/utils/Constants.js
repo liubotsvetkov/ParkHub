@@ -1,3 +1,3 @@
-const BACKEND_URL = "http://localhost:8089";
+const BACKEND_PREFIX = "/api";
 
-export { BACKEND_URL };
+export { BACKEND_PREFIX };

@@ -1,0 +1,14 @@
+server {
+    listen 8080;
+    root  /usr/share/nginx/html;
+    include /etc/nginx/mime.types;
+
+    location / {
+        try_files $uri $uri/ $uri.html =404;
+    }
+
+    location /api {
+        proxy_pass_request_headers   on;
+        proxy_pass ${BACKEND_URL};
+    }
+}

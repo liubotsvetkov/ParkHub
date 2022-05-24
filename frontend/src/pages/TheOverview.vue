@@ -23,7 +23,7 @@
 import TheMap from '../components/ui/TheMap.vue';
 import CustomSelect from '../components/ui/CustomSelect.vue';
 import axios from 'axios';
-import { BACKEND_URL } from '../utils/Constants.js';
+import { BACKEND_PREFIX } from '../utils/Constants.js';
 
 export default {
   components: {
@@ -86,9 +86,8 @@ export default {
         return response;
     },
     loadCities: async function() {
-    console.log("process env " + BACKEND_URL);
 
-        const response = await this.makeHttpRequest("get", `${BACKEND_URL}/cities`);
+        const response = await this.makeHttpRequest("get", `${BACKEND_PREFIX}/cities`);
 
         this.cities = response.data;
         const defaultChoice = {id: -1, name: ""};
@@ -96,7 +95,7 @@ export default {
     },
     loadNeighborhoodsByCity: async function() {
 
-        const response = await this.makeHttpRequest("get", `${BACKEND_URL}/neighborhoods/byCity/${this.selectedCityId}`);
+        const response = await this.makeHttpRequest("get", `${BACKEND_PREFIX}/neighborhoods/byCity/${this.selectedCityId}`);
 
         this.neighborhoods = response.data;
         const defaultChoice = {id: -1, name: ""};
@@ -107,13 +106,13 @@ export default {
         let response = null;
 
         if (this.selectedNeighborhoodId != -1) {
-            response = await this.makeHttpRequest("get", `${BACKEND_URL}/parkingSlots/byNeighborhood/${this.selectedNeighborhoodId}`);
+            response = await this.makeHttpRequest("get", `${BACKEND_PREFIX}/parkingSlots/byNeighborhood/${this.selectedNeighborhoodId}`);
         }
         else if (this.selectedCityId != -1) {
-            response = await this.makeHttpRequest("get", `${BACKEND_URL}/parkingSlots/byCity/${this.selectedCityId}`);
+            response = await this.makeHttpRequest("get", `${BACKEND_PREFIX}/parkingSlots/byCity/${this.selectedCityId}`);
         }
         else {
-            response = await this.makeHttpRequest("get", `${BACKEND_URL}/parkingSlots`);
+            response = await this.makeHttpRequest("get", `${BACKEND_PREFIX}/parkingSlots`);
         }
 
         this.parkingSlots = response.data;
